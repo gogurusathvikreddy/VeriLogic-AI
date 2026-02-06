@@ -7,15 +7,20 @@ from twilio.rest import Client
 app = Flask(__name__)
 
 # --- CONFIGURATION ---
-# Load keys from environment variables (set these in Render later)
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
 
 # --- GEMINI SETUP ---
 genai.configure(api_key=GEMINI_API_KEY)
-tools_config = [{"google_search": {}}]
-model = genai.GenerativeModel(model_name='gemini-1.5-flash', tools=tools_config)
+
+# FIX: Define the tool directly as a string object
+tools_config = 'google_search_retrieval'
+
+model = genai.GenerativeModel(
+    model_name='gemini-1.5-flash', 
+    tools=tools_config  # Pass the tool config here
+)
 
 def fact_check(text):
     """Uses Gemini + Google Search to verify the claim"""
@@ -29,6 +34,7 @@ def fact_check(text):
         return response.text
     except Exception as e:
         print(f"Gemini Error: {e}")
+        # Detailed error for debugging logs
         return "⚠️ I couldn't verify this right now. Please try again later."
 
 @app.route("/", methods=["GET"])
@@ -39,7 +45,7 @@ def home():
 def whatsapp_reply():
     """Receives message from Twilio, checks facts, and replies"""
     
-    # 1. Get the message text from the user
+    # 1. Get the message text
     incoming_msg = request.values.get('Body', '').strip()
     sender = request.values.get('From', '')
     
@@ -56,5 +62,4 @@ def whatsapp_reply():
     return str(resp)
 
 if __name__ == "__main__":
-
     app.run(port=5000)
