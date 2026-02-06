@@ -18,7 +18,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 tools_config = 'google_search_retrieval'
 
 model = genai.GenerativeModel(
-    model_name='gemini-1.5-flash', 
+    model_name='gemini-2.5-flash', 
     tools=tools_config  # Pass the tool config here
 )
 
@@ -63,3 +63,4 @@ def whatsapp_reply():
 
 if __name__ == "__main__":
     app.run(port=5000)
+
