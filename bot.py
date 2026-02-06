@@ -22,7 +22,7 @@ tools_config = [
 # NOTE: There is no "Gemini 2.5" yet. The latest fast model is "gemini-1.5-flash" 
 # or "gemini-2.0-flash-exp". We will use 1.5-flash as it is the most stable.
 model = genai.GenerativeModel(
-    model_name='gemini-1.5-flash', 
+    model_name='gemini-2.5-flash', 
     tools=tools_config
 )
 
@@ -69,3 +69,4 @@ def whatsapp_reply():
 
 if __name__ == "__main__":
     app.run(port=5000)
+
