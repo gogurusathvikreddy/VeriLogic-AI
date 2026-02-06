@@ -8,9 +8,9 @@ app = Flask(__name__)
 
 # --- CONFIGURATION ---
 # Load keys from environment variables (set these in Render later)
-GEMINI_API_KEY = os.environ.get("AIzaSyB9nQTEX4zQfpyEVBXVzmEdEqMaFFPWOyw")
-TWILIO_ACCOUNT_SID = os.environ.get("AC304a6ef8e1e15eca99f11c6f1b96c5a8")
-TWILIO_AUTH_TOKEN = os.environ.get("49497d0e326760208a704b0dbd093065")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
 
 # --- GEMINI SETUP ---
 genai.configure(api_key=GEMINI_API_KEY)
@@ -56,4 +56,5 @@ def whatsapp_reply():
     return str(resp)
 
 if __name__ == "__main__":
+
     app.run(port=5000)
